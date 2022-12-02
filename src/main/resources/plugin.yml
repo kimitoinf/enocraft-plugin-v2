@@ -1,0 +1,24 @@
+name: enocraft-plugin-v2
+version: '${version}'
+main: kimit.enocraft.Main
+api-version: 1.19
+authors: [ Kimit ]
+description: Enocraft Plugin V2
+
+commands:
+  test:
+    description: asdf
+    usage: /<command>
+    permission: enocraft.test
+  newpage:
+    description: asdf
+    usage: /<command>
+    permission: enocraft.newpage
+  removepage:
+    description: asdf
+    usage: /<command>
+    permission: enocraft.removepage
+  openpage:
+    description: asdf
+    usage: /<command>
+    permission: enocraft.openpage
