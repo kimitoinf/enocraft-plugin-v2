@@ -1,10 +1,13 @@
 package kimit.enocraft.util.InventoryPage;
 
+import kimit.enocraft.util.ConfigFile.ConfigFile;
+
 import java.util.HashMap;
 
-public class InventoryPageRegisterer
+public class InventoryPageManager
 {
 	private HashMap<String, InventoryPage> INVENTORYPAGES = new HashMap<String, InventoryPage>();
+	private HashMap<String, ConfigFile> INVENTORYPAGESCONFIG = new HashMap<String, ConfigFile>();
 
 	public void Register(String name)
 	{

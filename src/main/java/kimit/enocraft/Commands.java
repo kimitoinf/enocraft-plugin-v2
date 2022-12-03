@@ -13,17 +13,17 @@ public class Commands implements CommandExecutor
 		switch (label)
 		{
 			case "test":
-				Main.INVENTORYPAGES.Register("TEST");
-				Main.INVENTORYPAGES.getInventoryPages().get("TEST").OpenInventory((Player)sender);
+				Main.INVENTORYPAGEMANAGER.Register("TEST");
+				Main.INVENTORYPAGEMANAGER.getInventoryPages().get("TEST").OpenInventory((Player)sender);
 				break;
 			case "newpage":
-				Main.INVENTORYPAGES.getInventoryPages().get("TEST").CreatePage();
+				Main.INVENTORYPAGEMANAGER.getInventoryPages().get("TEST").CreatePage();
 				break;
 			case "removepage":
-				Main.INVENTORYPAGES.getInventoryPages().get("TEST").RemovePage();
+				Main.INVENTORYPAGEMANAGER.getInventoryPages().get("TEST").RemovePage();
 				break;
 			case "openpage":
-				Main.INVENTORYPAGES.getInventoryPages().get("TEST").OpenInventory((Player)sender);
+				Main.INVENTORYPAGEMANAGER.getInventoryPages().get("TEST").OpenInventory((Player)sender);
 				break;
 		}
 		return true;

@@ -1,4 +1,4 @@
-package kimit.enocraft.util;
+package kimit.enocraft.util.ConfigFile;
 
 import kimit.enocraft.Main;
 import org.bukkit.Bukkit;
@@ -12,13 +12,18 @@ public class ConfigFile
 {
 	private final String FILENAME;
 	private final File CONFIGFILE;
-	public final FileConfiguration CONFIG;
+	private final FileConfiguration CONFIG;
 
 	public ConfigFile(String filename)
 	{
 		FILENAME = filename;
 		CONFIGFILE = new File(Bukkit.getPluginManager().getPlugin(Main.PLUGINNAME).getDataFolder(), FILENAME);
 		CONFIG = YamlConfiguration.loadConfiguration(CONFIGFILE);
+	}
+
+	public FileConfiguration getConfig()
+	{
+		return CONFIG;
 	}
 
 	public void Open()

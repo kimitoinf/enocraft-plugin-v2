@@ -98,6 +98,11 @@ public class InventoryPage
 		INVENTORIES.get(page).setItem(pos, item);
 	}
 
+	public void RemoveItem(int page, int index, int count)
+	{
+
+	}
+
 	public void OpenInventory(Player player)
 	{
 		player.openInventory(INVENTORIES.get(0));

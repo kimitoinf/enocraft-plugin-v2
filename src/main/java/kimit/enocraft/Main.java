@@ -1,7 +1,8 @@
 package kimit.enocraft;
 
+import kimit.enocraft.Market.Market;
 import kimit.enocraft.util.InventoryPage.InventoryPageEventHandler;
-import kimit.enocraft.util.InventoryPage.InventoryPageRegisterer;
+import kimit.enocraft.util.InventoryPage.InventoryPageManager;
 import kimit.enocraft.util.PrefixLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,7 +18,8 @@ public class Main extends JavaPlugin
 	public static final String PLAYERSFOLDER = "/players";
 	public final PrefixLogger LOGGER = new PrefixLogger(getServer().getLogger());
 	public static HashMap<UUID, PlayerInfo> PLAYERS = new HashMap<UUID, PlayerInfo>();
-	public static InventoryPageRegisterer INVENTORYPAGES = new InventoryPageRegisterer();
+	public static InventoryPageManager INVENTORYPAGEMANAGER = new InventoryPageManager();
+	public static final Market MARKET = new Market("Market.yml");
 
 	@Override
 	public void onEnable()

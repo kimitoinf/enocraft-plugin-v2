@@ -1,29 +1,30 @@
 package kimit.enocraft;
 
-import kimit.enocraft.util.ConfigFile;
+import kimit.enocraft.util.ConfigFile.ConfigFile;
+import kimit.enocraft.util.ConfigFile.ConfigFileProvider;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.UUID;
 
-public class PlayerInfo
+public class PlayerInfo extends ConfigFileProvider
 {
 	private final UUID PLAYERUUID;
-	private final ConfigFile PLAYER;
+	private final String CASHCONFIG = "Cash";
 	private long CASH = 0;
 
 	public PlayerInfo(UUID uuid)
 	{
+		super(Main.PLAYERSFOLDER + "/" + uuid.toString() + ".yml");
 		PLAYERUUID = uuid;
-		PLAYER = new ConfigFile(Main.PLAYERSFOLDER + "/" + uuid.toString() + ".yml");
-		PLAYER.Open();
 
-		CASH = PLAYER.CONFIG.getLong("Cash");
+		CASH = CONFIG.getLong(CASHCONFIG);
 	}
 
+	@Override
 	public void Save()
 	{
-		PLAYER.CONFIG.set("Cash", CASH);
-
-		PLAYER.Close();
+		CONFIG.set(CASHCONFIG, CASH);
+		super.Save();
 	}
 
 	public UUID getUUID()

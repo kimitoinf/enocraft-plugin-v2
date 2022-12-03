@@ -11,9 +11,9 @@ public class InventoryPageEventHandler implements Listener
 	@EventHandler
 	public void ClickInventory(InventoryClickEvent e)
 	{
-		if (Main.INVENTORYPAGES.getInventoryPages().get(e.getView().getTitle()) != null && e.getClickedInventory() != null && e.getClickedInventory().equals(e.getView().getTopInventory()))
+		if (Main.INVENTORYPAGEMANAGER.getInventoryPages().get(e.getView().getTitle()) != null && e.getClickedInventory() != null && e.getClickedInventory().equals(e.getView().getTopInventory()))
 		{
-			InventoryPage ip = Main.INVENTORYPAGES.getInventoryPages().get(e.getView().getTitle());
+			InventoryPage ip = Main.INVENTORYPAGEMANAGER.getInventoryPages().get(e.getView().getTitle());
 			int page = Integer.parseInt(e.getClickedInventory().getItem(InventoryPage.CURRENTPOS).getItemMeta().getLore().get(0).split(" ")[0]) - 1;
 			final int index = e.getSlot();
 
