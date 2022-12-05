@@ -14,11 +14,12 @@ public class InventoryPage
 {
 	private final String NAME;
 	private ArrayList<Inventory> INVENTORIES = new ArrayList<Inventory>();
+	private ArrayList<ItemStack> ITEMS = new ArrayList<ItemStack>();
 
 	public static final int PREVIOUSPOS = 48;
 	public static final int CURRENTPOS = 49;
 	public static final int NEXTPOS = 50;
-	public static final int LIMITPOS = 45;
+	public static final int LIMITPOS = 44;
 
 	public static final String PREVIOUS = "이전 페이지";
 	public static final String CURRENT = "현재 페이지";
@@ -33,6 +34,11 @@ public class InventoryPage
 	public ArrayList<Inventory> getInventories()
 	{
 		return INVENTORIES;
+	}
+
+	public ArrayList<ItemStack> getItems()
+	{
+		return ITEMS;
 	}
 
 	private void SetPrevious(Inventory inventory)
@@ -96,6 +102,8 @@ public class InventoryPage
 			pos = 0;
 		}
 		INVENTORIES.get(page).setItem(pos, item);
+
+		ITEMS.add(item);
 	}
 
 	public void RemoveItem(int page, int index, int count)

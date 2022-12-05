@@ -14,7 +14,7 @@ public class Market extends ConfigFileProvider
 	public Market(String filename)
 	{
 		super(filename);
-		Main.INVENTORYPAGEMANAGER.Register(NAME);
+		Main.INVENTORYPAGEMANAGER.Register(NAME, NAME);
 		MARKET = Main.INVENTORYPAGEMANAGER.getInventoryPages().get(NAME);
 	}
 

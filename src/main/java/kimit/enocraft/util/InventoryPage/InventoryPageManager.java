@@ -9,9 +9,9 @@ public class InventoryPageManager
 	private HashMap<String, InventoryPage> INVENTORYPAGES = new HashMap<String, InventoryPage>();
 	private HashMap<String, ConfigFile> INVENTORYPAGESCONFIG = new HashMap<String, ConfigFile>();
 
-	public void Register(String name)
+	public void Register(String key, String name)
 	{
-		INVENTORYPAGES.put(name, new InventoryPage(name));
+		INVENTORYPAGES.put(key, new InventoryPage(name));
 	}
 
 	public HashMap<String, InventoryPage> getInventoryPages()

@@ -1,6 +1,9 @@
 package kimit.enocraft;
 
 import kimit.enocraft.Market.Market;
+import kimit.enocraft.PlayerInfo.PlayerInfo;
+import kimit.enocraft.PlayerInfo.PlayerInfoCommand;
+import kimit.enocraft.PlayerInfo.PlayerInfoEventHandler;
 import kimit.enocraft.util.InventoryPage.InventoryPageEventHandler;
 import kimit.enocraft.util.InventoryPage.InventoryPageManager;
 import kimit.enocraft.util.PrefixLogger;
@@ -15,11 +18,11 @@ import java.util.UUID;
 public class Main extends JavaPlugin
 {
 	public static final String PLUGINNAME = "enocraft-plugin-v2";
-	public static final String PLAYERSFOLDER = "/players";
+	public static final String PLAYERSFOLDER = File.separator + "players";
 	public final PrefixLogger LOGGER = new PrefixLogger(getServer().getLogger());
 	public static HashMap<UUID, PlayerInfo> PLAYERS = new HashMap<UUID, PlayerInfo>();
 	public static InventoryPageManager INVENTORYPAGEMANAGER = new InventoryPageManager();
-	public static final Market MARKET = new Market("Market.yml");
+	public static Market MARKET;
 
 	@Override
 	public void onEnable()
@@ -34,6 +37,8 @@ public class Main extends JavaPlugin
 		if (!playersFolder.exists())
 			playersFolder.mkdir();
 
+		MARKET = new Market("Market.yml");
+
 		for (Player player : Bukkit.getServer().getOnlinePlayers())
 		{
 			UUID uuid = player.getUniqueId();
@@ -45,6 +50,8 @@ public class Main extends JavaPlugin
 		this.getCommand("newpage").setExecutor(new Commands());
 		this.getCommand("removepage").setExecutor(new Commands());
 		this.getCommand("openpage").setExecutor(new Commands());
+		this.getCommand("receive").setExecutor(new PlayerInfoCommand());
+		Bukkit.getPluginManager().registerEvents(new PlayerInfoEventHandler(), this);
 		Bukkit.getPluginManager().registerEvents(new InventoryPageEventHandler(), this);
 	}
 

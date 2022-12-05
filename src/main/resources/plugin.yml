@@ -22,3 +22,7 @@ commands:
     description: asdf
     usage: /<command>
     permission: enocraft.openpage
+  receive:
+    description: Open player's received item inventory.
+    usage: /<command>
+    permission: enocraft.receive

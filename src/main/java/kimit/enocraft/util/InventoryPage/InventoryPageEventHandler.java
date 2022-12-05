@@ -11,13 +11,13 @@ public class InventoryPageEventHandler implements Listener
 	@EventHandler
 	public void ClickInventory(InventoryClickEvent e)
 	{
-		if (Main.INVENTORYPAGEMANAGER.getInventoryPages().get(e.getView().getTitle()) != null && e.getClickedInventory() != null && e.getClickedInventory().equals(e.getView().getTopInventory()))
+		Player player = (Player)e.getWhoClicked();
+		if ((Main.INVENTORYPAGEMANAGER.getInventoryPages().get(player.getUniqueId().toString()) != null || Main.INVENTORYPAGEMANAGER.getInventoryPages().get(e.getView().getTitle()) != null) && e.getClickedInventory() != null && e.getClickedInventory().equals(e.getView().getTopInventory()))
 		{
 			InventoryPage ip = Main.INVENTORYPAGEMANAGER.getInventoryPages().get(e.getView().getTitle());
 			int page = Integer.parseInt(e.getClickedInventory().getItem(InventoryPage.CURRENTPOS).getItemMeta().getLore().get(0).split(" ")[0]) - 1;
 			final int index = e.getSlot();
 
-			Player player = (Player)e.getWhoClicked();
 			if (index == InventoryPage.PREVIOUSPOS && page != 0)
 			{
 				page--;
@@ -28,7 +28,9 @@ public class InventoryPageEventHandler implements Listener
 				page++;
 				player.openInventory(ip.getInventories().get(page));
 			}
-			e.setCancelled(true);
+
+			if (index > InventoryPage.LIMITPOS)
+				e.setCancelled(true);
 		}
 	}
 }

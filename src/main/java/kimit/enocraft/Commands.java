@@ -13,7 +13,7 @@ public class Commands implements CommandExecutor
 		switch (label)
 		{
 			case "test":
-				Main.INVENTORYPAGEMANAGER.Register("TEST");
+				Main.INVENTORYPAGEMANAGER.Register("TEST", "TEST");
 				Main.INVENTORYPAGEMANAGER.getInventoryPages().get("TEST").OpenInventory((Player)sender);
 				break;
 			case "newpage":
