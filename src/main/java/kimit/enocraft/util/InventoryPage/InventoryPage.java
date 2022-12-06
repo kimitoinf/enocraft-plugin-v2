@@ -38,6 +38,7 @@ public class InventoryPage
 
 	public ArrayList<ItemStack> getItems()
 	{
+		Synchronize();
 		return ITEMS;
 	}
 
@@ -92,7 +93,10 @@ public class InventoryPage
 		for (; page != INVENTORIES.size(); page++)
 		{
 			if (INVENTORIES.get(page).firstEmpty() <= LIMITPOS)
+			{
 				pos = INVENTORIES.get(page).firstEmpty();
+				break;
+			}
 		}
 
 		if (pos == -1)
@@ -109,6 +113,19 @@ public class InventoryPage
 	public void RemoveItem(int page, int index, int count)
 	{
 
+	}
+
+	public void Synchronize()
+	{
+		ITEMS.clear();
+		for (Inventory inventory : INVENTORIES)
+		{
+			for (int loop = 0; loop <= LIMITPOS; loop++)
+			{
+				if (inventory.getItem(loop) != null && inventory.getItem(loop).getType() != Material.AIR)
+					ITEMS.add(inventory.getItem(loop));
+			}
+		}
 	}
 
 	public void OpenInventory(Player player)

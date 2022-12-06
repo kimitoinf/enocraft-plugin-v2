@@ -1,20 +1,28 @@
 package kimit.enocraft.util.InventoryPage;
 
 import kimit.enocraft.Main;
+import kimit.enocraft.PlayerInfo.PlayerInfo;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class InventoryPageEventHandler implements Listener
 {
 	@EventHandler
 	public void ClickInventory(InventoryClickEvent e)
 	{
-		Player player = (Player)e.getWhoClicked();
-		if ((Main.INVENTORYPAGEMANAGER.getInventoryPages().get(player.getUniqueId().toString()) != null || Main.INVENTORYPAGEMANAGER.getInventoryPages().get(e.getView().getTitle()) != null) && e.getClickedInventory() != null && e.getClickedInventory().equals(e.getView().getTopInventory()))
+		if ((e.getView().getTitle().equals(PlayerInfo.RECEIVE) || Main.INVENTORYPAGEMANAGER.getInventoryPages().get(e.getView().getTitle()) != null) && e.getClickedInventory() != null && e.getClickedInventory().equals(e.getView().getTopInventory()))
 		{
-			InventoryPage ip = Main.INVENTORYPAGEMANAGER.getInventoryPages().get(e.getView().getTitle());
+			InventoryPage ip = null;
+			Player player = (Player)e.getWhoClicked();
+			if (Main.INVENTORYPAGEMANAGER.getInventoryPages().get(e.getView().getTitle()) != null)
+				ip = Main.INVENTORYPAGEMANAGER.getInventoryPages().get(e.getView().getTitle());
+			else if (Main.INVENTORYPAGEMANAGER.getInventoryPages().get(player.getUniqueId().toString()) != null)
+				ip = Main.INVENTORYPAGEMANAGER.getInventoryPages().get(player.getUniqueId().toString());
+
 			int page = Integer.parseInt(e.getClickedInventory().getItem(InventoryPage.CURRENTPOS).getItemMeta().getLore().get(0).split(" ")[0]) - 1;
 			final int index = e.getSlot();
 
@@ -31,6 +39,19 @@ public class InventoryPageEventHandler implements Listener
 
 			if (index > InventoryPage.LIMITPOS)
 				e.setCancelled(true);
+
+			int count = 0;
+			for (ItemStack loop : ip.getInventories().get(page).getContents())
+			{
+				if (loop != null && loop.getType() != Material.AIR)
+					count++;
+			}
+			if (count == 2 && page != 0)
+			{
+				page--;
+				player.openInventory(ip.getInventories().get(page));
+				ip.RemovePage();
+			}
 		}
 	}
 }

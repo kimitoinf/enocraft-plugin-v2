@@ -26,3 +26,7 @@ commands:
     description: Open player's received item inventory.
     usage: /<command>
     permission: enocraft.receive
+  sell:
+    description: Sell item
+    usage: /<command>
+    permission: enocraft.market.sell

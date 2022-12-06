@@ -1,6 +1,8 @@
 package kimit.enocraft;
 
 import kimit.enocraft.Market.Market;
+import kimit.enocraft.Market.MarketCommand;
+import kimit.enocraft.Market.MarketEventHandler;
 import kimit.enocraft.PlayerInfo.PlayerInfo;
 import kimit.enocraft.PlayerInfo.PlayerInfoCommand;
 import kimit.enocraft.PlayerInfo.PlayerInfoEventHandler;
@@ -50,8 +52,10 @@ public class Main extends JavaPlugin
 		this.getCommand("newpage").setExecutor(new Commands());
 		this.getCommand("removepage").setExecutor(new Commands());
 		this.getCommand("openpage").setExecutor(new Commands());
-		this.getCommand("receive").setExecutor(new PlayerInfoCommand());
+		this.getCommand(PlayerInfoCommand.RECEIVE).setExecutor(new PlayerInfoCommand());
+		this.getCommand(MarketCommand.SELL).setExecutor(new MarketCommand());
 		Bukkit.getPluginManager().registerEvents(new PlayerInfoEventHandler(), this);
+		Bukkit.getPluginManager().registerEvents(new MarketEventHandler(), this);
 		Bukkit.getPluginManager().registerEvents(new InventoryPageEventHandler(), this);
 	}
 
