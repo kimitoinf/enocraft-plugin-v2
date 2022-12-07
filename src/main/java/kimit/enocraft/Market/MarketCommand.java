@@ -30,6 +30,12 @@ public class MarketCommand implements CommandExecutor
 					Inventory inventory = Bukkit.createInventory(null, 9, SELLINVENTORY);
 					player.openInventory(inventory);
 					break;
+				case "getcash":
+					player.sendMessage(Long.toString(Main.PLAYERS.get(player.getUniqueId()).getCash()));
+					break;
+				case "setcash":
+					Main.PLAYERS.get(player.getUniqueId()).setCash(Long.parseLong(args[0]));
+					break;
 			}
 		}
 		return true;

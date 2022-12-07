@@ -26,6 +26,19 @@ public class InventoryPageEventHandler implements Listener
 			int page = Integer.parseInt(e.getClickedInventory().getItem(InventoryPage.CURRENTPOS).getItemMeta().getLore().get(0).split(" ")[0]) - 1;
 			final int index = e.getSlot();
 
+			int count = 0;
+			for (ItemStack loop : ip.getInventories().get(page).getContents())
+			{
+				if (loop != null && loop.getType() != Material.AIR)
+					count++;
+			}
+			if (count == 2 && page != 0)
+			{
+				page--;
+				player.openInventory(ip.getInventories().get(page));
+				ip.RemovePage();
+			}
+
 			if (index == InventoryPage.PREVIOUSPOS && page != 0)
 			{
 				page--;
@@ -39,19 +52,6 @@ public class InventoryPageEventHandler implements Listener
 
 			if (index > InventoryPage.LIMITPOS)
 				e.setCancelled(true);
-
-			int count = 0;
-			for (ItemStack loop : ip.getInventories().get(page).getContents())
-			{
-				if (loop != null && loop.getType() != Material.AIR)
-					count++;
-			}
-			if (count == 2 && page != 0)
-			{
-				page--;
-				player.openInventory(ip.getInventories().get(page));
-				ip.RemovePage();
-			}
 		}
 	}
 }

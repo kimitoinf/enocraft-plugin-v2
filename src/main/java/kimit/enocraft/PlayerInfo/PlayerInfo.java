@@ -16,6 +16,8 @@ public class PlayerInfo extends ConfigFileProvider
 
 	private final String CASHCONFIG = "Cash";
 	private long CASH = 0;
+	public boolean ONMARKETSELL = false;
+	public ArrayList<ItemStack> MARKETSELL = new ArrayList<ItemStack>();
 
 	public PlayerInfo(UUID uuid)
 	{

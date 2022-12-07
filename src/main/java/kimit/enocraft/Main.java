@@ -53,7 +53,10 @@ public class Main extends JavaPlugin
 		this.getCommand("removepage").setExecutor(new Commands());
 		this.getCommand("openpage").setExecutor(new Commands());
 		this.getCommand(PlayerInfoCommand.RECEIVE).setExecutor(new PlayerInfoCommand());
+		this.getCommand(MarketCommand.MARKET).setExecutor(new MarketCommand());
 		this.getCommand(MarketCommand.SELL).setExecutor(new MarketCommand());
+		this.getCommand("getcash").setExecutor(new MarketCommand());
+		this.getCommand("setcash").setExecutor(new MarketCommand());
 		Bukkit.getPluginManager().registerEvents(new PlayerInfoEventHandler(), this);
 		Bukkit.getPluginManager().registerEvents(new MarketEventHandler(), this);
 		Bukkit.getPluginManager().registerEvents(new InventoryPageEventHandler(), this);
@@ -67,5 +70,7 @@ public class Main extends JavaPlugin
 
 		for (Player player : Bukkit.getServer().getOnlinePlayers())
 			PLAYERS.get(player.getUniqueId()).Save();
+
+		MARKET.Save();
 	}
 }
