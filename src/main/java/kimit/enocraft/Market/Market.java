@@ -4,6 +4,7 @@ import kimit.enocraft.Main;
 import kimit.enocraft.PlayerInfo.PlayerInfoCommand;
 import kimit.enocraft.util.ConfigFile.ConfigFileProvider;
 import kimit.enocraft.util.InventoryPage.InventoryPage;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -50,7 +51,7 @@ public class Market extends ConfigFileProvider
 
 	public void PurchaseItem(Player player, int page, int index, long price)
 	{
-		ItemStack item = Main.MARKET.MARKET.getInventories().get(page).getItem(index);
+		ItemStack item = Main.MARKET.MARKET.getInventories().get(page).getItem(index).clone();
 		ItemMeta meta = item.getItemMeta();
 		List<String> lore = meta.getLore();
 		lore.clear();
@@ -61,7 +62,7 @@ public class Market extends ConfigFileProvider
 		Main.PLAYERS.get(player.getUniqueId()).addCash(-price);
 		player.sendMessage("아이템 " + item.getType().toString() + "을 " + Long.toString(price) + "원에 구매하였습니다.");
 		player.sendMessage("구매한 아이템은 /" + PlayerInfoCommand.RECEIVE + " 명령어로 받을 수 있습니다.");
-		Main.MARKET.MARKET.RemoveItem(item, page, index, 1);
+		Main.MARKET.MARKET.RemoveItem(page, index, 1);
 	}
 
 	@Override

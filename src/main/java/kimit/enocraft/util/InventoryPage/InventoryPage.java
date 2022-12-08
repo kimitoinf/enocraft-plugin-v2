@@ -110,9 +110,9 @@ public class InventoryPage
 		ITEMS.add(item);
 	}
 
-	public void RemoveItem(ItemStack item, int page, int index, int count)
+	public void RemoveItem(int page, int index, int count)
 	{
-		// need to fix bug.
+		ItemStack item = INVENTORIES.get(page).getItem(index);
 		item.setAmount(item.getAmount() - count);
 		INVENTORIES.get(page).setItem(index, item);
 		Synchronize();
