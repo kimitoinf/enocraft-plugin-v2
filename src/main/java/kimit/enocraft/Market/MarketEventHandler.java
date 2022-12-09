@@ -29,16 +29,22 @@ public class MarketEventHandler implements Listener
 		else if (e.getView().getTitle().equals(Market.NAME) && Main.INVENTORYPAGEMANAGER.getInventoryPages().get(e.getView().getTitle()) != null && e.getClickedInventory() != null && e.getClickedInventory().equals(e.getView().getTopInventory()) && e.getSlot() <= InventoryPage.LIMITPOS && e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR)
 		{
 			e.setCancelled(true);
-			final int page = Integer.parseInt(e.getClickedInventory().getItem(InventoryPage.CURRENTPOS).getItemMeta().getLore().get(0).split(" ")[0]) - 1;
-			final int index = e.getSlot();
-			ItemMeta meta = e.getCurrentItem().getItemMeta();
-			List<String> lore = meta.getLore();
-			final long price = Long.parseLong(lore.get(1).split(" ")[3]);
-			Player player = (Player)e.getWhoClicked();
-			if (price > Main.PLAYERS.get(player.getUniqueId()).getCash())
-				player.sendMessage("구입하고자 하는 물품의 가격이 소지한 현금보다 비싸 구매할 수 없습니다.");
-			else
-				Main.MARKET.PurchaseItem((Player)e.getWhoClicked(), page, index, price);
+			if (e.isLeftClick())
+			{
+				final int page = Integer.parseInt(e.getClickedInventory().getItem(InventoryPage.CURRENTPOS).getItemMeta().getLore().get(0).split(" ")[0]) - 1;
+				final int index = e.getSlot();
+				ItemMeta meta = e.getCurrentItem().getItemMeta();
+				List<String> lore = meta.getLore();
+				final long price = Long.parseLong(lore.get(1).split(" ")[3]);
+				Player player = (Player) e.getWhoClicked();
+				if (price > Main.PLAYERS.get(player.getUniqueId()).getCash())
+					player.sendMessage("구입하고자 하는 물품의 가격이 소지한 현금보다 비싸 구매할 수 없습니다.");
+				else if (!e.isShiftClick())
+					Main.MARKET.PurchaseItem((Player) e.getWhoClicked(), page, index, price, Market.LEFTCLICK);
+				else
+					Main.MARKET.PurchaseItem((Player) e.getWhoClicked(), page, index, price, Market.SHIFTLEFTCLICK);
+
+			}
 		}
 	}
 

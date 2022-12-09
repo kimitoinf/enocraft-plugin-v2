@@ -29,16 +29,7 @@ public class ConfigFile
 	public void Open()
 	{
 		if (!CONFIGFILE.exists())
-		{
-			try
-			{
-				CONFIGFILE.createNewFile();
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
+			CreateFile();
 	}
 
 	public void Close()
@@ -46,6 +37,18 @@ public class ConfigFile
 		try
 		{
 			CONFIG.save(CONFIGFILE);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	private void CreateFile()
+	{
+		try
+		{
+			CONFIGFILE.createNewFile();
 		}
 		catch (IOException e)
 		{

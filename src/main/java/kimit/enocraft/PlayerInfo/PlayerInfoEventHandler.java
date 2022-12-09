@@ -20,6 +20,7 @@ public class PlayerInfoEventHandler implements Listener
 	@EventHandler
 	public void OnQuit(PlayerQuitEvent e)
 	{
+		Main.PLAYERS.get(e.getPlayer().getUniqueId()).Save();
 		Main.PLAYERS.remove(e.getPlayer().getUniqueId());
 	}
 

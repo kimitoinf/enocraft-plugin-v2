@@ -1,7 +1,9 @@
 package kimit.enocraft.Market;
 
 import kimit.enocraft.Main;
+import kimit.enocraft.PlayerInfo.PlayerInfo;
 import kimit.enocraft.PlayerInfo.PlayerInfoCommand;
+import kimit.enocraft.util.ConfigFile.ConfigFile;
 import kimit.enocraft.util.ConfigFile.ConfigFileProvider;
 import kimit.enocraft.util.InventoryPage.InventoryPage;
 import org.bukkit.Bukkit;
@@ -9,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +21,8 @@ public class Market extends ConfigFileProvider
 	public static final String COUNT = "Count";
 	private final InventoryPage MARKET;
 	public static final int FEE = 10;
+	public static final int LEFTCLICK = 1;
+	public static final int SHIFTLEFTCLICK = 10;
 
 	public Market(String filename)
 	{
@@ -40,6 +45,8 @@ public class Market extends ConfigFileProvider
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("판매자 : " + player.getName());
 		lore.add("개당 가격 : " + Long.toString(price));
+		lore.add("좌클릭으로 " + Integer.toString(LEFTCLICK) + "개 구매");
+		lore.add("SHIFT + 좌클릭으로 " + Integer.toString(SHIFTLEFTCLICK) + "개 구매");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		MARKET.AddItem(item);
@@ -49,20 +56,38 @@ public class Market extends ConfigFileProvider
 		player.sendMessage("아이템 등록이 완료되었습니다.");
 	}
 
-	public void PurchaseItem(Player player, int page, int index, long price)
+	public void PurchaseItem(Player player, int page, int index, long price, int count)
 	{
 		ItemStack item = Main.MARKET.MARKET.getInventories().get(page).getItem(index).clone();
 		ItemMeta meta = item.getItemMeta();
 		List<String> lore = meta.getLore();
+		String name = lore.get(0).split(" ")[2];
+		Player seller = Bukkit.getPlayer(name);
 		lore.clear();
 		meta.setLore(lore);
 		item.setItemMeta(meta);
-		item.setAmount(1);
+		if (item.getAmount() > count)
+			item.setAmount(count);
+		count = item.getAmount();
+		long total = count * price;
 		Main.INVENTORYPAGEMANAGER.getInventoryPages().get(player.getUniqueId().toString()).AddItem(item);
-		Main.PLAYERS.get(player.getUniqueId()).addCash(-price);
-		player.sendMessage("아이템 " + item.getType().toString() + "을 " + Long.toString(price) + "원에 구매하였습니다.");
+		Main.PLAYERS.get(player.getUniqueId()).addCash(-total);
+		String message = "아이템 " + item.getType().toString() + " " + Integer.toString(count) + "개를 " + Long.toString(total) + "원에 구매하였습니다.";
+		player.sendMessage(message);
 		player.sendMessage("구매한 아이템은 /" + PlayerInfoCommand.RECEIVE + " 명령어로 받을 수 있습니다.");
-		Main.MARKET.MARKET.RemoveItem(page, index, 1);
+		Main.MARKET.MARKET.RemoveItem(page, index, count);
+		if (seller != null)
+		{
+			Main.PLAYERS.get(seller.getUniqueId()).addCash(total);
+			seller.sendMessage("플레이어 " + player.getName() + "님이 " + message);
+		}
+		else
+		{
+			ConfigFile config = new ConfigFile(Main.PLAYERSFOLDER + File.separator + Bukkit.getOfflinePlayer(name).getUniqueId().toString() + ".yml");
+			config.Open();
+			config.getConfig().set(PlayerInfo.CASHCONFIG, config.getConfig().getLong(PlayerInfo.CASHCONFIG) + total);
+			config.Close();
+		}
 	}
 
 	@Override

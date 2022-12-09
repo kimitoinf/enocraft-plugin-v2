@@ -14,7 +14,7 @@ public class PlayerInfo extends ConfigFileProvider
 	public static final String RECEIVE = "Receive";
 	public static final String RECEIVECOUNT = RECEIVE + ".Count";
 
-	private final String CASHCONFIG = "Cash";
+	public static final String CASHCONFIG = "Cash";
 	private long CASH = 0;
 	public boolean ONMARKETSELL = false;
 	public ArrayList<ItemStack> MARKETSELL = new ArrayList<ItemStack>();
